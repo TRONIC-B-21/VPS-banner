@@ -4,7 +4,7 @@
 
 
 ```
-https://raw.githubusercontent.com/TRONIC-B-21/VPS-banner/main/banner.sh
+https://raw.githubusercontent.com/TRONIC-B-21/VPS-banner/main/Banner.sh
 ```
 
 🚀 Ultra VPS Banner Setup Script – by TRONIC-B-21 (Terry)
