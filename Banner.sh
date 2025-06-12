@@ -12,13 +12,39 @@ fi
 echo -e "\033[1;33m[~] Installing required packages...\033[0m"
 apt update -y && apt install -y figlet neofetch lolcat curl
 
-# 🌐 Fetch latest banner.sh from GitHub
-echo -e "\033[1;36m[⇩] Downloading latest banner script from GitHub...\033[0m"
-curl -fsSL https://raw.githubusercontent.com/TRONIC-B-21/VPS-banner/main/banner.sh -o /etc/profile.d/banner.sh
+# 🧾 Create Banner Script
+echo -e "\033[1;32m[✔️] Creating login banner...\033[0m"
+cat << 'EOF' > /etc/profile.d/banner.sh
+#!/bin/bash
+clear
 
-# ✅ Make banner script executable
+# Collect system info
+HOSTNAME=$(hostname)
+IPADDR=$(hostname -I | awk '{print $1}')
+CPU=$(awk -F ': ' '/model name/ {print $2; exit}' /proc/cpuinfo)
+RAM=$(free -h | awk '/Mem:/ {print $2 " RAM"}')
+UPTIME=$(uptime -p)
+
+# Display banner
+echo -e "\033[1;35m"
+figlet -f slant "Hyper Lite 2.5" | lolcat
+echo -e "\033[0m"
+
+echo -e "\033[1;33m🔥 Ultimate VPS - Powered by TRONIC-B-21 🔥\033[0m"
+echo -e "\033[1;31m============================================\033[0m"
+echo -e "\033[1;34m• Hostname:\033[0m     $HOSTNAME"
+echo -e "\033[1;34m• IP Address:\033[0m   $IPADDR"
+echo -e "\033[1;34m• CPU:\033[0m          $CPU"
+echo -e "\033[1;34m• Memory:\033[0m       $RAM"
+echo -e "\033[1;34m• Uptime:\033[0m       $UPTIME"
+echo -e "\033[1;36m• Motto:\033[0m        I Love Jesus"
+echo -e "\033[1;31m============================================\033[0m"
+
+neofetch --disable resolution wm theme | lolcat
+EOF
+
+# ✅ Make it executable
 chmod +x /etc/profile.d/banner.sh
-echo -e "\033[1;32m[✔️] Login banner installed and updated successfully.\033[0m"
 
 # 📝 Set custom MOTD
 echo -e "\033[1;32m[✔️] Writing Message of the Day (MOTD)...\033[0m"
